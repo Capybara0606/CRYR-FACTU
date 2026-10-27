@@ -19,3 +19,7 @@ Las facturas conservan una copia de los datos del cliente y del emisor. Los prec
 Los datos se guardan en localStorage: son específicos del navegador y del origen (host/puerto). No hay servidor de datos, sincronización, autenticación ni cobros en línea. **Exporta respaldos JSON periódicamente** desde Mi negocio o la barra lateral; restaurar reemplaza los datos actuales. No guardes datos sensibles en equipos compartidos. No es un sistema de comprobantes fiscales electrónicos certificados: revisa los requisitos fiscales aplicables antes de usarlo como documento tributario.
 
 La aplicación funciona sin fuentes externas; Google Fonts mejora la tipografía si está disponible. No se deben incluir datos reales de clientes ni respaldos en el repositorio.
+
+## Identidad visual
+
+Logo SVG y tokens de diseño tomados de [Capybara0606/cybr-view](https://github.com/Capybara0606/cybr-view), revisión `c43a6127fd3580140aedac88d80124f200dbf2db`. Se conservan en `assets/`; el despliegue de Pages los incluye. La interfaz usa el fondo, colores, tipografías de sistema, rejilla técnica y módulos numerados de esa referencia.
