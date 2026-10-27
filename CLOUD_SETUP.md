@@ -11,7 +11,7 @@ curl -fsSL https://raw.githubusercontent.com/Capybara0606/CRYR-FACTU/main/setup_
 python3 /tmp/kiru-setup-firebase.py
 ```
 
-Puedes revisar [el script](setup_firebase.py) antes de ejecutarlo. Obtiene un token de la sesión actual de gcloud sin imprimirlo ni guardarlo. Lee y respalda solo las reglas existentes en Cloud Shell, añade las reglas de facturación sin cambiar `cybrview`, autoriza el dominio y verifica el bloqueo de lecturas anónimas. Rechaza reglas generales que pudieran exponer facturación. No lee registros de clientes ni facturas.
+Puedes revisar [el script](setup_firebase.py) antes de ejecutarlo. Obtiene un token de la sesión actual de gcloud sin imprimirlo ni guardarlo. Las solicitudes autenticadas indican `cybr-view` como proyecto de cuota mediante `X-Goog-User-Project`; la cuenta necesita permiso para usar la cuota de ese proyecto. Lee y respalda solo las reglas existentes en Cloud Shell, añade las reglas de facturación sin cambiar `cybrview`, autoriza el dominio y verifica el bloqueo de lecturas anónimas. Rechaza reglas generales que pudieran exponer facturación. No lee registros de clientes ni facturas.
 
 Si Google ya tiene un cliente OAuth configurado, intenta activar su proveedor. Si no existe o faltan permisos, indica el paso pendiente en la consola; no inventa credenciales OAuth. Revisa los mensajes `OK`, `PENDIENTE` y `NO COMPLETADO`. Es posible que se completen algunos pasos y otro requiera intervención; puedes volver a ejecutar el script para continuar. La copia de reglas no contiene datos del negocio ni el token.
 
@@ -44,9 +44,8 @@ Añade la propiedad `kiruBilling` que aparece abajo **dentro del objeto `rules`,
         "updatedAt": { ".validate": "newData.isString()" },
         "payload": { ".validate": "newData.isString()" },
         "history": {
-          ".validate": "newData.numChildren() <= 20",
           "$entry": {
-            ".validate": "newData.hasChildren(['at', 'payload']) && newData.child('at').isString() && newData.child('payload').isString()"
+            ".validate": "($entry === '0' || $entry === '1' || $entry === '2' || $entry === '3' || $entry === '4' || $entry === '5' || $entry === '6' || $entry === '7' || $entry === '8' || $entry === '9' || $entry === '10' || $entry === '11' || $entry === '12' || $entry === '13' || $entry === '14' || $entry === '15' || $entry === '16' || $entry === '17' || $entry === '18' || $entry === '19') && (newData.hasChildren(['at', 'payload']) && newData.child('at').isString() && newData.child('payload').isString())"
           }
         },
         "$other": { ".validate": false }
@@ -55,6 +54,8 @@ Añade la propiedad `kiruBilling` que aparece abajo **dentro del objeto `rules`,
   }
 }
 ```
+
+El historial admite únicamente las claves `0` a `19`, correspondientes al arreglo de las últimas 20 versiones. Esta validación evita usar `numChildren()`, que no está disponible en las reglas de Realtime Database.
 
 Pulsa **Publish** en el editor de reglas. No establezcas `.read: true` ni `.write: true` en la raíz o en la ruta de facturación: una regla pública en un padre anula la protección de los hijos. Si existen permisos generales en la raíz, deben revisarse antes de guardar información real.
 

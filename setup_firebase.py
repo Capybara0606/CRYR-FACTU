@@ -23,6 +23,7 @@ def request(url, token=None, method='GET', data=None):
     headers = {'Accept': 'application/json'}
     if token:
         headers['Authorization'] = 'Bearer ' + token
+        headers['X-Goog-User-Project'] = PROJECT
     if data is not None:
         headers['Content-Type'] = 'application/json'
     req = urllib.request.Request(url, headers=headers, method=method,
