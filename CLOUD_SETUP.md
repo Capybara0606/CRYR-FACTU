@@ -2,6 +2,21 @@
 
 La aplicación ya apunta al proyecto `cybr-view`. La configuración web es pública; las reglas son las que protegen los datos. La aplicación no usa localStorage, IndexedDB, caché offline ni persistencia de sesión para guardar registros. Los formularios abiertos existen temporalmente en memoria y se pierden al cerrar la página si no fueron guardados en Firebase.
 
+## Alternativa: configurar desde Google Cloud Shell
+
+Si el entorno de Codex no permite aplicar el secreto, no lo pongas en GitHub. Abre Cloud Shell con la cuenta administradora de `cybr-view` y ejecuta:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/Capybara0606/CRYR-FACTU/main/setup_firebase.py -o /tmp/kiru-setup-firebase.py
+python3 /tmp/kiru-setup-firebase.py
+```
+
+Puedes revisar [el script](setup_firebase.py) antes de ejecutarlo. Obtiene un token de la sesión actual de gcloud sin imprimirlo ni guardarlo. Lee y respalda solo las reglas existentes en Cloud Shell, añade las reglas de facturación sin cambiar `cybrview`, autoriza el dominio y verifica el bloqueo de lecturas anónimas. Rechaza reglas generales que pudieran exponer facturación. No lee registros de clientes ni facturas.
+
+Si Google ya tiene un cliente OAuth configurado, intenta activar su proveedor. Si no existe o faltan permisos, indica el paso pendiente en la consola; no inventa credenciales OAuth. Revisa los mensajes `OK`, `PENDIENTE` y `NO COMPLETADO`. Es posible que se completen algunos pasos y otro requiera intervención; puedes volver a ejecutar el script para continuar. La copia de reglas no contiene datos del negocio ni el token.
+
+Pruebas del script: `python3 -m unittest setup_firebase_test.py`.
+
 ## 1. Acceso
 
 Abre https://console.firebase.google.com/project/cybr-view/authentication/providers
