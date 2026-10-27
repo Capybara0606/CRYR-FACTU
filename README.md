@@ -34,3 +34,15 @@ Al crear una factura en EUR, el asistente **Vídeos largos** calcula el precio c
 En **Mi negocio → Importar facturas históricas**, carga un JSON de revisión con formato `kiru-history-review-v1` y `catalogCurrency` (`EUR` o `USD`). La moneda del catálogo debe coincidir con la de Mi negocio; no se convierten tarifas. Puedes cargar el archivo o abrir «¿No puedes descargar el archivo? Pega el contenido» para introducir el JSON directamente. Selecciona las facturas, confirma el pago y el vencimiento, y acepta expresamente las discrepancias indicadas. Antes del guardado verás cuántos clientes, servicios y facturas se añadirán. Las estadísticas se recalculan con las facturas guardadas; el estado de pago determina cobrado y por cobrar. Los datos de Mi negocio se conservan y los emisores históricos quedan dentro de sus facturas.
 
 La importación no reemplaza facturas existentes. Omite números ya registrados con el mismo cliente, moneda y total; un número con datos diferentes bloquea el lote para revisión. Deduplica clientes por identificación fiscal (o nombre si falta) y servicios por nombre y precio. Las facturas excluidas del archivo permanecen pendientes de aclaración. El archivo se lee en memoria y solo se guarda en la ruta privada de Firebase al confirmar; no debe incluirse en GitHub ni en el sitio público. La escritura utiliza las mismas protecciones contra conflictos que el resto de la aplicación.
+
+## Facturas para correo y PDF
+
+Cada factura tiene un campo **Enlace de pago único de esta factura**, vacío en las nuevas facturas e independiente de las instrucciones generales de Mi negocio. Pega una URL HTTPS creada en tu proveedor de pagos para el importe correcto; la aplicación no crea enlaces en ese proveedor ni verifica su importe o vigencia. Al cambiar el importe de la factura, revisa también su enlace. Se guarda junto con la factura en Firebase.
+
+En la vista de una factura guardada:
+
+- **Copiar para correo** copia una versión HTML con estilos inline y una alternativa de texto. Pega en el cuerpo del correo con formato enriquecido, no como texto sin formato ni como código fuente. Si el navegador bloquea el portapapeles, aparece una vista para seleccionar y copiar manualmente. El aspecto final puede variar entre clientes de correo.
+- **HTML** descarga un archivo autónomo de esa factura, sin scripts ni recursos externos. Se genera bajo demanda desde los datos guardados; no se publica en GitHub Pages.
+- **Imprimir / PDF** abre el diálogo del navegador: selecciona «Guardar como PDF». El botón de pago es un enlace en la factura; la conservación del enlace en el PDF depende de la herramienta de impresión utilizada.
+
+El botón **Pagar** aparece únicamente con una URL HTTPS válida y mientras la factura esté pendiente. Al marcarla pagada deja de aparecer. Las facturas antiguas sin enlace siguen funcionando; puedes editarlas para añadirlo. Exportar no envía correos ni marca automáticamente una factura como pagada.
