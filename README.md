@@ -1,25 +1,28 @@
-# KIRU · Facturación
+# KIRU · Facturación en la nube
 
-Aplicación sencilla en español para gestionar datos del negocio, clientes, servicios y facturas con estética oscura y verde. Requiere Node.js 20 o superior; no necesita instalar dependencias.
+Aplicación en español para datos del negocio, clientes, servicios y facturas con identidad visual KIRU / CYBR VIEW. Los registros se guardan exclusivamente en Firebase Realtime Database, separados por usuario autenticado. No hay modo local ni guardado offline.
+
+**Activación necesaria:** sigue [CLOUD_SETUP.md](CLOUD_SETUP.md) para habilitar Google, autorizar el dominio y añadir las reglas privadas sin sustituir las de CYBR VIEW.
+
+Requiere Node.js 20+ para desarrollo. No tiene dependencias npm:
 
 ```sh
 npm start
+npm test
 ```
 
-Servidor en el puerto 3000, configurable con `PORT`. Para validar cálculos: `npm test`.
+Servidor en puerto 3000 (configurable con `PORT`). Producción estática en GitHub Pages mediante `.github/workflows/pages.yml`.
 
-1. Configura tus datos, moneda (EUR o USD), impuesto y datos bancarios en **Mi negocio**.
-2. Guarda tus clientes y servicios.
-3. Crea una factura, añade servicios del catálogo o líneas libres, cantidades, descuento e impuesto.
-4. Guarda y usa **Imprimir / PDF** para generar el documento. Desactiva las cabeceras y pies del navegador en el diálogo de impresión.
-5. Registra manualmente el estado pagado o pendiente.
+- Inicia sesión con Google o con tu cuenta existente de CYBR VIEW. La sesión solo permanece en memoria, hasta cerrar o recargar.
+- Configura el negocio, moneda EUR/USD, impuesto e instrucciones de pago.
+- Crea clientes, servicios y facturas. Cada guardado espera la confirmación de Firebase.
+- Sin conexión se bloquea la edición. No se mantienen colas offline.
+- Accede desde otro equipo con la misma cuenta para recuperar los registros. Los listados se actualizan cada 20 segundos; las ediciones simultáneas se protegen con ETag y producen un aviso de conflicto.
+- Mi negocio permite restaurar las últimas 20 versiones anteriores guardadas en Firebase. Este historial no es un respaldo independiente. Consulta los límites en la guía de activación.
+- Imprimir / PDF permite exportar la factura voluntariamente. No hay almacenamiento automático de registros en tu equipo.
 
-Las facturas conservan una copia de los datos del cliente y del emisor. Los precios del catálogo usan la moneda configurada del negocio; cambiarla no convierte los importes. Los totales del panel corresponden solo a la moneda actual.
-
-Los datos se guardan en localStorage: son específicos del navegador y del origen (host/puerto). No hay servidor de datos, sincronización, autenticación ni cobros en línea. **Exporta respaldos JSON periódicamente** desde Mi negocio o la barra lateral; restaurar reemplaza los datos actuales. No guardes datos sensibles en equipos compartidos. No es un sistema de comprobantes fiscales electrónicos certificados: revisa los requisitos fiscales aplicables antes de usarlo como documento tributario.
-
-La aplicación funciona sin fuentes externas; Google Fonts mejora la tipografía si está disponible. No se deben incluir datos reales de clientes ni respaldos en el repositorio.
+Las facturas conservan una copia del cliente y del emisor. Cambiar la moneda no convierte precios existentes. Los totales del panel corresponden a la moneda actual. No es un sistema de comprobantes fiscales electrónicos certificados.
 
 ## Identidad visual
 
-Logo SVG y tokens de diseño tomados de [Capybara0606/cybr-view](https://github.com/Capybara0606/cybr-view), revisión `c43a6127fd3580140aedac88d80124f200dbf2db`. Se conservan en `assets/`; el despliegue de Pages los incluye. La interfaz usa el fondo, colores, tipografías de sistema, rejilla técnica y módulos numerados de esa referencia.
+Logo SVG y tokens de [Capybara0606/cybr-view](https://github.com/Capybara0606/cybr-view), revisión `c43a6127fd3580140aedac88d80124f200dbf2db`, en `assets/`.

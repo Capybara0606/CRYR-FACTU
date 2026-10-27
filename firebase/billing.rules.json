@@ -1,0 +1,34 @@
+{
+  "kiruBilling": {
+    "v1": {
+      "users": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": "auth != null && auth.uid === $uid && newData.exists()",
+          ".validate": "newData.hasChildren(['schema', 'revision', 'updatedAt', 'payload']) && newData.child('schema').val() === 1 && newData.child('revision').isNumber() && newData.child('revision').val() === (data.exists() ? data.child('revision').val() + 1 : 1) && newData.child('updatedAt').isString() && newData.child('payload').isString() && newData.child('payload').val().length <= 10000000",
+          "schema": {
+            ".validate": "newData.val() === 1"
+          },
+          "revision": {
+            ".validate": "newData.isNumber()"
+          },
+          "updatedAt": {
+            ".validate": "newData.isString()"
+          },
+          "payload": {
+            ".validate": "newData.isString()"
+          },
+          "history": {
+            ".validate": "newData.numChildren() <= 20",
+            "$entry": {
+              ".validate": "newData.hasChildren(['at', 'payload']) && newData.child('at').isString() && newData.child('payload').isString()"
+            }
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
+    }
+  }
+}
