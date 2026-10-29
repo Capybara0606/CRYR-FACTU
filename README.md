@@ -41,8 +41,7 @@ Cada factura tiene un campo **Enlace de pago único de esta factura**, vacío en
 
 En la vista de una factura guardada:
 
-- **Copiar para correo** copia una versión HTML con estilos inline y una alternativa de texto. Pega en el cuerpo del correo con formato enriquecido, no como texto sin formato ni como código fuente. Si el navegador bloquea el portapapeles, aparece una vista para seleccionar y copiar manualmente. El aspecto final puede variar entre clientes de correo.
-- **HTML** descarga un archivo autónomo de esa factura, sin scripts ni recursos externos. Se genera bajo demanda desde los datos guardados; no se publica en GitHub Pages.
-- **Imprimir / PDF** abre el diálogo del navegador: selecciona «Guardar como PDF». El botón de pago es un enlace en la factura; la conservación del enlace en el PDF depende de la herramienta de impresión utilizada.
+- **Copiar HTML para correo** copia una versión HTML con estilos inline y una alternativa de texto. Pega en el cuerpo del correo con formato enriquecido, no como texto sin formato ni como código fuente. Si el navegador bloquea el portapapeles, aparece una vista para seleccionar y copiar manualmente. La pantalla, el HTML copiado y el PDF usan la misma plantilla oscura, bordes verdes, tablas y CSS inline. El logo es una imagen pública sin datos del cliente. Algunos clientes de correo bloquean imágenes o cambian colores; pega conservando el formato original. No hay descarga de HTML.
+- **Imprimir / PDF** abre el diálogo del navegador: selecciona «Guardar como PDF». Se preservan el fondo oscuro, los bordes verdes y el enlace de pago. Activa «Gráficos de fondo» si tu navegador omite los fondos y desactiva encabezados y pies del navegador. La conservación del enlace en el PDF depende de la herramienta de impresión utilizada.
 
 El botón **Pagar** aparece únicamente con una URL HTTPS válida y mientras la factura esté pendiente. Al marcarla pagada deja de aparecer. Las facturas antiguas sin enlace siguen funcionando; puedes editarlas para añadirlo. Exportar no envía correos ni marca automáticamente una factura como pagada.

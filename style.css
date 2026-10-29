@@ -46,3 +46,20 @@ footer{padding:20px 0;font-size:8px}
 .vl-helper{margin-bottom:20px}.vl-helper h3{margin-bottom:12px}.import-invoice{border-bottom:1px solid var(--border,#333);padding:20px 0}.import-invoice p,.import-invoice details{margin:10px 0}.import-warning{padding:12px;border:1px solid #b78b47;margin:12px 0}.import-warning ul{padding-left:20px}.import-invoice input[type=checkbox],#historical-import-form input[type=checkbox]{width:auto;min-height:auto;display:inline-block;margin-right:8px}#import-error{color:#ffb4a5;margin-top:16px}#modal:has(#historical-import-form){width:min(850px,95vw)}
 
 .invoice-payment{margin:20px 0;overflow-wrap:anywhere}.invoice-payment a{color:#050505}
+
+/* La misma plantilla con CSS inline se usa en pantalla, portapapeles e impresión. */
+.invoice-document{max-width:850px;margin:0 auto;overflow-x:auto}
+.invoice-document [data-invoice-sheet],#email-copy-content [data-invoice-sheet]{min-width:580px}
+.invoice-document tbody tr:hover,#email-copy-content tbody tr:hover{background:transparent}
+#modal:has(#email-copy-content){width:min(950px,96vw)}
+#email-copy-content{overflow-x:auto}
+@media print{
+  @page{size:A4;margin:10mm}
+  body{background:#fff!important}
+  .invoice-document{max-width:none;margin:0;overflow:visible;zoom:.82}
+  .invoice-document [data-invoice-sheet]{min-width:0;width:100%!important}
+  .invoice-document,.invoice-document *{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+  .invoice-document tr{break-inside:avoid}
+  .invoice-document [data-invoice-sheet]>tbody>tr{break-inside:auto}
+  .invoice-document thead{display:table-header-group}
+}
