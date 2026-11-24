@@ -1,4 +1,4 @@
-import {paymentLink,invoiceEmailHtml,invoicePlainText} from './invoice-export.js';
+import {paymentLink,invoiceEmailHtml,invoicePlainText} from './invoice-export.js?v=invoice-typography';
 import {totals,nextNumber,validBackup,longVideoQuote} from './domain.js';
 import {readImportProposal,mergeHistoricalImport} from './history-import.js';
 import {CloudStore} from './cloud-store.js';
